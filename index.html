@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f7fb">
+    <title>Connexion — Espace</title>
+    <style>
+      :root {
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #172033;
+        background: #f6f7fb;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        padding: 28px;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(ellipse at 12% 18%, rgba(108, 128, 255, .13), transparent 30%),
+          radial-gradient(ellipse at 88% 82%, rgba(64, 190, 160, .11), transparent 30%),
+          #f6f7fb;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 1.08fr .92fr;
+        width: min(100%, 1080px);
+        min-height: 650px;
+        overflow: hidden;
+        border: 1px solid rgba(226, 230, 240, .9);
+        border-radius: 30px;
+        background: #fff;
+        box-shadow: 0 32px 90px rgba(28, 38, 72, .12);
+      }
+
+      .visual {
+        position: relative;
+        display: flex;
+        min-height: 650px;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+        padding: 42px;
+        color: white;
+        background:
+          radial-gradient(ellipse at 80% 10%, rgba(133, 159, 255, .5), transparent 35%),
+          linear-gradient(145deg, #16254a, #263d75 55%, #4762a8);
+      }
+
+      .visual::before, .visual::after {
+        position: absolute;
+        content: "";
+        border: 1px solid rgba(255,255,255,.16);
+        border-radius: 50%;
+        pointer-events: none;
+      }
+      .visual::before { width: 510px; height: 510px; right: -210px; top: 90px; }
+      .visual::after { width: 360px; height: 360px; right: -135px; top: 165px; }
+
+      .brand, .visual-copy, .visual-note { position: relative; z-index: 1; }
+      .brand { display: flex; align-items: center; gap: 12px; font-size: 15px; font-weight: 720; letter-spacing: .01em; }
+      .brand-mark {
+        display: grid;
+        width: 38px;
+        height: 38px;
+        place-items: center;
+        border: 1px solid rgba(255,255,255,.23);
+        border-radius: 12px;
+        background: rgba(255,255,255,.12);
+        font-size: 18px;
+      }
+
+      .visual-copy { max-width: 440px; margin: auto 0; padding: 62px 0 48px; }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 22px;
+        color: #d3ddff;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .13em;
+        text-transform: uppercase;
+      }
+      .eyebrow::before { width: 7px; height: 7px; border-radius: 50%; background: #85e0c0; content: ""; }
+      .visual h1 { max-width: 420px; margin: 0; font-size: clamp(38px, 5vw, 58px); line-height: 1.05; letter-spacing: -.055em; }
+      .visual-copy p { max-width: 370px; margin: 22px 0 0; color: #d5def4; font-size: 16px; line-height: 1.75; }
+      .visual-note { color: #c4cfea; font-size: 12px; }
+
+      .form-side { display: grid; align-content: center; padding: 64px clamp(32px, 6vw, 76px); }
+      .form-content { width: min(100%, 360px); margin: 0 auto; }
+      .mini-brand { display: none; }
+      .welcome { margin: 0 0 10px; font-size: 34px; letter-spacing: -.045em; }
+      .intro { margin: 0 0 34px; color: #778096; font-size: 15px; line-height: 1.7; }
+      .label { display: block; margin-bottom: 12px; color: #39445b; font-size: 13px; font-weight: 700; }
+      .google-box {
+        display: grid;
+        min-height: 54px;
+        place-items: center;
+        padding: 5px;
+        border: 1px solid #e8ebf2;
+        border-radius: 14px;
+        background: #fff;
+        transition: border-color .2s, box-shadow .2s;
+      }
+      .google-box:focus-within { border-color: #9eb4ff; box-shadow: 0 0 0 4px rgba(74, 108, 230, .09); }
+      #google-button { display: flex; justify-content: center; min-height: 44px; }
+      #status { min-height: 22px; margin: 12px 0 0; color: #b42318; font-size: 13px; line-height: 1.55; }
+      .divider { display: flex; align-items: center; gap: 14px; margin: 24px 0 18px; color: #a0a7b6; font-size: 11px; }
+      .divider::before, .divider::after { height: 1px; flex: 1; background: #edf0f5; content: ""; }
+      .privacy { margin: 0; color: #858da0; font-size: 12px; line-height: 1.7; text-align: center; }
+      .privacy strong { color: #525d73; font-weight: 650; }
+
+      @media (max-width: 760px) {
+        body { padding: 16px; }
+        .layout { grid-template-columns: 1fr; min-height: auto; max-width: 520px; border-radius: 24px; }
+        .visual { display: none; }
+        .form-side { padding: 48px 30px 38px; }
+        .mini-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 44px; color: #273552; font-size: 14px; font-weight: 720; }
+        .mini-brand .brand-mark { border-color: #e4eaff; background: #f0f3ff; color: #4a67d6; }
+      }
+
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+    </style>
+    <script src="https://accounts.google.com/gsi/client" async defer onload="initializeGoogleSignIn()" onerror="showGoogleError()"></script>
+  </head>
+  <body>
+    <main class="layout">
+      <section class="visual" aria-label="Présentation">
+        <div class="brand"><span class="brand-mark" aria-hidden="true">✦</span> Votre espace</div>
+        <div class="visual-copy">
+          <span class="eyebrow">Simplement connecté</span>
+          <h1>Votre espace, en toute simplicité.</h1>
+          <p>Retrouvez un accueil personnel et sécurisé avec votre compte Google.</p>
+        </div>
+        <div class="visual-note">Une expérience pensée pour vous.</div>
+      </section>
+
+      <section class="form-side" aria-labelledby="welcome-title">
+        <div class="form-content">
+          <div class="mini-brand"><span class="brand-mark" aria-hidden="true">✦</span> Votre espace</div>
+          <h2 class="welcome" id="welcome-title">Bienvenue</h2>
+          <p class="intro">Connectez-vous pour accéder à votre espace personnel.</p>
+          <span class="label">Continuer avec Google</span>
+          <div class="google-box"><div id="google-button"></div></div>
+          <p id="status" role="alert" aria-live="polite"></p>
+          <div class="divider">CONNEXION SÉCURISÉE</div>
+          <p class="privacy">En continuant, vous utilisez votre compte Google pour accéder à <strong>votre espace personnel</strong>.</p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const clientId = "689157069231-bs9q0njbl6ljbfnisi8fdajgcnc68bds.apps.googleusercontent.com";
+      const status = document.getElementById("status");
+
+      function showGoogleError() {
+        status.textContent = "Le service Google est indisponible. Vérifiez votre connexion, puis actualisez la page.";
+      }
+
+      function initializeGoogleSignIn() {
+        if (!window.google || !window.google.accounts || !window.google.accounts.id) {
+          showGoogleError();
+          return;
+        }
+
+        google.accounts.id.initialize({
+          client_id: clientId,
+          callback: handleCredentialResponse
+        });
+        google.accounts.id.renderButton(document.getElementById("google-button"), {
+          type: "standard",
+          theme: "outline",
+          size: "large",
+          text: "signin_with",
+          shape: "rectangular",
+          width: 280,
+          locale: "fr"
+        });
+      }
+
+      function handleCredentialResponse(response) {
+        try {
+          const encodedPayload = response.credential.split(".")[1];
+          const base64 = encodedPayload.replace(/-/g, "+").replace(/_/g, "/");
+          const payload = JSON.parse(decodeURIComponent(
+            Array.from(atob(base64), character =>
+              "%" + character.charCodeAt(0).toString(16).padStart(2, "0")
+            ).join("")
+          ));
+
+          if (!payload.sub || !payload.email) throw new Error("Profil Google incomplet");
+
+          const profile = {
+            id: payload.sub,
+            name: payload.name || payload.email,
+            email: payload.email,
+            picture: typeof payload.picture === "string" ? payload.picture : ""
+          };
+          sessionStorage.setItem("googleProfile", JSON.stringify(profile));
+          window.location.assign("accueil.html");
+        } catch (error) {
+          console.error("Impossible de finaliser la connexion Google.", error);
+          status.textContent = "La connexion n’a pas abouti. Veuillez réessayer.";
+        }
+      }
+    </script>
+  </body>
+</html>
